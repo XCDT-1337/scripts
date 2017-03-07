@@ -43,19 +43,19 @@ sudo sed -i 's/PermitRootLogin yes/PermitRootLogin prohibit-password/g' /etc/ssh
 sudo sed -i 's/Port 22/Port 7707/g' /etc/ssh/sshd_config #change ssh port to 7707 and disable sshroot
 sudo systemctl restart sshd
 
-echo "Setting up 2-Factor Authentication"
-sudo apt-get install -y libpam0g-dev make gcc
-sudo wget http://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2
-sudo tar -xvf libpam-google-authenticator-1.0-source.tar.bz2
-cd libpam-google-authenticator-1.0/
-sudo make && make install
-echo "you take over and write down the codes, ain't nobody got time for that"
-google-authenticator
-echo "get those codes"
-read -rsp $'Press any key to continue...\n' -n1 keys
-sudo sed 's/# \/etc\/security\/pam_env.conf./\nauth       required     pam_google_authenticator.so' /etc/pam.d/sshd
-sudo sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-sudo systemctl restart sshd
+#echo "Setting up 2-Factor Authentication"
+#sudo apt-get install -y libpam0g-dev make gcc
+#sudo wget http://google-authenticator.googlecode.com/files/libpam-google-authenticator-1.0-source.tar.bz2
+#sudo tar -xvf libpam-google-authenticator-1.0-source.tar.bz2
+#cd libpam-google-authenticator-1.0/
+#sudo make && make install
+#echo "you take over and write down the codes"
+#google-authenticator
+#echo "get those codes"
+#read -rsp $'Press any key to continue...\n' -n1 keys
+#sudo sed 's/# \/etc\/security\/pam_env.conf./\nauth       required     pam_google_authenticator.so' /etc/pam.d/sshd
+#sudo sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+#sudo systemctl restart sshd
 IP=$(netstat -ant | grep ESTABLISHED | cut -d 1)
 echo "input your local user \n"
 read -rsp lusr
